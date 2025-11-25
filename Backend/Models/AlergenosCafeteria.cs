@@ -2,7 +2,7 @@ using Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 namespace Models;
-public class AlergenosProductosCafeteria
+public class AlergenosCafeteria
 
 {
     public int AlergenoId {get; set;}

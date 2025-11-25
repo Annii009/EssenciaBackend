@@ -1,3 +1,7 @@
+CREATE DATABASE EssenciaDB;
+
+USE EssenciaDB;
+
 -- TABLA PRINCIPAL DE CAFETERÍA
 CREATE TABLE ProductosCafeteria (
     ID INT PRIMARY KEY,

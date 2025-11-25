@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Models;
+using Essencia.Backend.Data;
 
 namespace Essencia.Backend.Repositories
 {
@@ -11,7 +13,7 @@ namespace Essencia.Backend.Repositories
         {
             _context = context;
         }
-
+        
         public async Task<IEnumerable<ProductosFloristeria>> GetAllAsync()
         {
             return await _context.ProductosFloristeria.ToListAsync();
@@ -26,6 +28,18 @@ namespace Essencia.Backend.Repositories
         {
             await _context.ProductosFloristeria.AddAsync(producto);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var producto = await _context.ProductosFloristeria.FindAsync(id);
+
+            if (producto != null)
+            {
+                _context.ProductosFloristeria.Remove(producto);
+
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

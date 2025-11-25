@@ -15,14 +15,14 @@ public class ProductosCafeteria
 
     public ProductosCafeteria(){}
 
-    public ProductosCafeteria(int ProductosCafeteriaId, string Nombre, string Categoria, string ImagenRuta, string Descripcion, decimal PrecioEuros)
+    public ProductosCafeteria(int productosCafeteriaId, string nombre, string categoria, string imagenRuta, string descripcion, decimal precioEuros)
     {
-        ProductosCafeteriaId = ProductosCafeteriaId;
-        Nombre = Nombre;
-        Categoria = Categoria;
-        ImagenRuta = ImagenRuta;
-        Descripcion = Descripcion;
-        PrecioEuros = PrecioEuros;
+        ProductosCafeteriaId = productosCafeteriaId;
+        Nombre = nombre;
+        Categoria = categoria;
+        ImagenRuta = imagenRuta;
+        Descripcion = descripcion;
+        PrecioEuros = precioEuros;
     }
 }
 

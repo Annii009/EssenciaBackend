@@ -11,5 +11,5 @@ public class Pedidos
     public bool PedidoCompletado {get; set;} = false;
     public decimal Total {get; set;}
     public string Notas {get; set;}
-    public List<DetallesPedido> DetallesPedidos {get; set;} = new();
+    public List<DetallePedido> DetallesPedidos {get; set;} = new();
 }
