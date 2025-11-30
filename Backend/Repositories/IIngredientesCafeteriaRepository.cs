@@ -9,6 +9,5 @@ namespace Essencia.Backend.Repositories
         Task<IngredientesCafeteria> AddAsync(IngredientesCafeteria ingrediente);
         Task DeleteAsync(int id);
         Task<int> GetMaxIdAsync();
-    
     }
 }

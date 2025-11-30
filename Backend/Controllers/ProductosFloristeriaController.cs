@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Essencia.Backend.Dtos;
 using Essencia.Backend.Services;

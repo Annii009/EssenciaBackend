@@ -1,28 +1,20 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace Models;
-
-[Table("IngredientesCafeteria")]
-public class IngredientesCafeteria
+namespace Models
 {
-    [Key]
-    [Column("ID")]
-    public int IngredientesId {get; set;}
-    [Key]
-    [Column("ProductoCafeteriaId")]
-    public ProductosCafeteria? Producto {get; set;}
-    [Column("Ingrediente")]
-    public string Ingrediente {get; set;}
-
-    public IngredientesCafeteria(){}
-
-    public IngredientesCafeteria(int ingredientesId, ProductosCafeteria? producto, string ingrediente)
+    public class IngredientesCafeteria
     {
-        IngredientesId = ingredientesId;
-        Producto = producto;
-        Ingrediente = ingrediente;
+        public int IngredientesId { get; set; }
+        public int ProductoId { get; set; }
+        public ProductosCafeteria? Producto { get; set; }
+        public string Ingrediente { get; set; }
+
+        public IngredientesCafeteria() { }
+
+        public IngredientesCafeteria(int ingredientesId, int productoId, ProductosCafeteria? producto, string ingrediente)
+        {
+            IngredientesId = ingredientesId;
+            ProductoId = productoId;
+            Producto = producto;
+            Ingrediente = ingrediente;
+        }
     }
 }

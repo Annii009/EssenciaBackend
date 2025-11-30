@@ -1,6 +1,3 @@
-using Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 namespace Models;
 public class AlergenosCafeteria
 

@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using Essencia.Backend.Dtos;
 namespace Models;
 public class DetallePedido
 {

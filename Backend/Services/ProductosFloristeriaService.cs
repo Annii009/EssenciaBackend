@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using Essencia.Backend.Repositories;
 using Essencia.Backend.Dtos;
 using Models;

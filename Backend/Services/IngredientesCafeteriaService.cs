@@ -18,7 +18,9 @@ namespace Essencia.Backend.Services
             var ingredientes = await _ingredientesCafeteriaRepository.GetAllAsync();
             return ingredientes.Select(i => new IngredientesCafeteriaResponseDto
             {
-                Producto = i.Producto,
+                IngredientesId = i.IngredientesId,
+                ProductoId = i.ProductoId,
+                ProductoNombre = i.Producto?.Nombre,
                 Ingrediente = i.Ingrediente
             }).ToList();
         }
@@ -33,7 +35,9 @@ namespace Essencia.Backend.Services
 
             return new IngredientesCafeteriaResponseDto
             {
-                Producto = i.Producto,
+                IngredientesId = i.IngredientesId,
+                ProductoId = i.ProductoId,
+                ProductoNombre = i.Producto?.Nombre,
                 Ingrediente = i.Ingrediente
             };
         }
@@ -44,7 +48,7 @@ namespace Essencia.Backend.Services
             var nuevoIngrediente = new IngredientesCafeteria
             {
                 IngredientesId = maxId + 1,
-                Producto = dto.Producto,
+                ProductoId = dto.ProductoId,
                 Ingrediente = dto.Ingrediente
             };
 
@@ -59,5 +63,4 @@ namespace Essencia.Backend.Services
             await _ingredientesCafeteriaRepository.DeleteAsync(id);
         }
     }
-    
 }

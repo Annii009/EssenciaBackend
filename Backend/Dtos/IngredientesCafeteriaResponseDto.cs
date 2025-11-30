@@ -1,12 +1,10 @@
-using Models;
-
 namespace Essencia.Backend.Dtos
 {
     public class IngredientesCafeteriaResponseDto
     {
-        public ProductosCafeteria? Producto { get; set; }
+        public int IngredientesId { get; set; }
+        public int ProductoId { get; set; }
+        public string? ProductoNombre { get; set; }
         public string Ingrediente { get; set; }
-    
     }
-
 }
