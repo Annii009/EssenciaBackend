@@ -6,7 +6,7 @@ using Essencia.Backend.Services;
 namespace Essencia.Backend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")] 
+    [Route("api/[controller]")]
     public class ProductosFloristeriaController : ControllerBase
     {
         private readonly ProductosFloristeriaService _productosFloristeriaService;
@@ -34,17 +34,19 @@ namespace Essencia.Backend.Controllers
             return Ok(producto);
         }
 
-        [HttpPost] 
+        [HttpPost]
         public async Task<IActionResult> CreateProductoFloristeria([FromBody] ProductosFloristeriaCreateDto dto)
         {
-            await _productosFloristeriaService.CreatProductoFloristeriaAsync(dto);
-            return CreatedAtAction(nameof(GetProductoFloristeriaById), new { id = dto.ProductosFloristeriaId }, dto);
+            var nuevoProducto = await _productosFloristeriaService.CreatProductoFloristeriaAsync(dto);
+            return CreatedAtAction(nameof(GetProductoFloristeriaById),
+                                  new { id = nuevoProducto.ProductosFloristeriaId },
+                                  nuevoProducto);
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteProductoFloristeria(int id)
         {
-            
+
             var producto = await _productosFloristeriaService.GetProductoFloristeriaByIdAsync(id);
             if (producto == null)
             {

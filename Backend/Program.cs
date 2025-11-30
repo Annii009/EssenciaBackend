@@ -15,6 +15,9 @@ builder.Services.AddDbContext<EssenciaDbContext>(options =>
 
 builder.Services.AddScoped<IProductosFloristeriaRepository, ProductosFloristeriaRepository>();
 builder.Services.AddScoped<ProductosFloristeriaService>();
+builder.Services.AddScoped<IIngredientesCafeteriaRepository, IngredientesCafeteriaRepository>();
+builder.Services.AddScoped<IngredientesCafeteriaService>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

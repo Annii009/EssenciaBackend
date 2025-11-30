@@ -48,18 +48,21 @@ namespace Essencia.Backend.Services
             };
         }
 
-        public async Task CreatProductoFloristeriaAsync(ProductosFloristeriaCreateDto dto)
+        public async Task<ProductosFloristeria> CreatProductoFloristeriaAsync(ProductosFloristeriaCreateDto dto)
         {
+            var maxId = await _productosFloristeriaRepository.GetMaxIdAsync();
             var nuevoProducto = new ProductosFloristeria
             {
+                ProductosFloristeriaId = maxId + 1,
                 Nombre = dto.Nombre,
                 ImagenRuta = dto.ImagenRuta,
                 Detalle = dto.Detalle,
                 DescripcionCuidados = dto.DescripcionCuidados,
                 PrecioEuros = dto.PrecioEuros
             };
-            
+
             await _productosFloristeriaRepository.AddAsync(nuevoProducto);
+            return nuevoProducto;
         }
 
         public async Task DeleteAsync(int id)

@@ -13,7 +13,7 @@ namespace Essencia.Backend.Repositories
         {
             _context = context;
         }
-        
+
         public async Task<IEnumerable<ProductosFloristeria>> GetAllAsync()
         {
             return await _context.ProductosFloristeria.ToListAsync();
@@ -24,10 +24,11 @@ namespace Essencia.Backend.Repositories
             return await _context.ProductosFloristeria.FindAsync(id);
         }
 
-        public async Task AddAsync(ProductosFloristeria producto)
+        public async Task<ProductosFloristeria> AddAsync(ProductosFloristeria producto)
         {
             await _context.ProductosFloristeria.AddAsync(producto);
             await _context.SaveChangesAsync();
+            return producto;
         }
 
         public async Task DeleteAsync(int id)
@@ -40,6 +41,15 @@ namespace Essencia.Backend.Repositories
 
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<int> GetMaxIdAsync()
+        {
+            if (!await _context.ProductosFloristeria.AnyAsync())
+            {
+                return 0;
+            }
+            return await _context.ProductosFloristeria.MaxAsync(p => p.ProductosFloristeriaId);
         }
     }
 }
