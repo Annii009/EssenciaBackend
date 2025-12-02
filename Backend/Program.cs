@@ -16,6 +16,10 @@ builder.Services.AddScoped<IngredientesCafeteriaService>();
 builder.Services.AddScoped<IProductosCafeteriaRepository, ProductosCafeteriaRepository>();
 builder.Services.AddScoped<ProductosCafeteriaService>();
 
+builder.Services.AddScoped<IAlergenosCafeteriaRepository, AlergenosCafeteriaRepository>();
+builder.Services.AddScoped<AlergenosCafeteriaService>();
+
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
