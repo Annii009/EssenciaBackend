@@ -8,13 +8,14 @@ namespace Essencia.Backend.Controllers
     [Route("api/[controller]")]
     public class ProductosCafeteriaController : ControllerBase
     {
-        private readonly ProductosCafeteriaService _productosCafeteriaService;
+        private readonly IProductosCafeteriaService _productosCafeteriaService;
 
-        public ProductosCafeteriaController(ProductosCafeteriaService productosCafeteriaService)
+        public ProductosCafeteriaController(IProductosCafeteriaService productosCafeteriaService)
         {
             _productosCafeteriaService = productosCafeteriaService;
         }
 
+        // GET api/productoscafeteria
         [HttpGet]
         public async Task<IActionResult> GetAllProductosCafeteria()
         {
@@ -22,6 +23,7 @@ namespace Essencia.Backend.Controllers
             return Ok(productos);
         }
 
+        // GET api/productoscafeteria/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductoCafeteriaById(int id)
         {
@@ -33,18 +35,28 @@ namespace Essencia.Backend.Controllers
             return Ok(producto);
         }
 
+        // POST api/productoscafeteria
         [HttpPost]
         public async Task<IActionResult> CreateProductoCafeteria([FromBody] ProductosCafeteriaCreateDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var nuevoProducto = await _productosCafeteriaService.CreateProductoCafeteriaAsync(dto);
-            return CreatedAtAction(nameof(GetProductoCafeteriaById),
-                                  new { id = nuevoProducto.ProductosCafeteriaId },
-                                  nuevoProducto);
+
+            return CreatedAtAction(
+                nameof(GetProductoCafeteriaById),
+                new { id = nuevoProducto.ProductosCafeteriaId },
+                nuevoProducto);
         }
 
+        // PUT api/productoscafeteria/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProductoCafeteria(int id, [FromBody] ProductosCafeteriaUpdateDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var productoActualizado = await _productosCafeteriaService.UpdateProductoCafeteriaAsync(id, dto);
             if (productoActualizado == null)
             {
@@ -53,6 +65,7 @@ namespace Essencia.Backend.Controllers
             return Ok(productoActualizado);
         }
 
+        // DELETE api/productoscafeteria/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProductoCafeteria(int id)
         {
@@ -61,6 +74,7 @@ namespace Essencia.Backend.Controllers
             {
                 return NotFound();
             }
+
             await _productosCafeteriaService.DeleteAsync(id);
             return NoContent();
         }

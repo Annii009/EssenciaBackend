@@ -4,7 +4,7 @@ using Models;
 
 namespace Essencia.Backend.Services
 {
-    public class IngredientesCafeteriaService
+    public class IngredientesCafeteriaService : IIngredientesCafeteriaService
     {
         private readonly IIngredientesCafeteriaRepository _ingredientesCafeteriaRepository;
 
@@ -12,6 +12,7 @@ namespace Essencia.Backend.Services
         {
             _ingredientesCafeteriaRepository = ingredientesCafeteriaRepository;
         }
+
 
         public async Task<IEnumerable<IngredientesCafeteriaResponseDto>> GetAllIngredientesCafeteriaAsync()
         {
@@ -63,4 +64,5 @@ namespace Essencia.Backend.Services
             await _ingredientesCafeteriaRepository.DeleteAsync(id);
         }
     }
+
 }

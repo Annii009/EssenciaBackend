@@ -1,25 +1,27 @@
 using Essencia.Backend.Repositories;
 using Essencia.Backend.Services;
-using Essencia.Backend.Dtos; 
+using Essencia.Backend.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-var connectionString = builder.Configuration.GetConnectionString("CadenaConexionEssencia");
+// Repositorios
 builder.Services.AddScoped<IProductosFloristeriaRepository, ProductosFloristeriaRepository>();
-builder.Services.AddScoped<ProductosFloristeriaService>();
 builder.Services.AddScoped<IIngredientesCafeteriaRepository, IngredientesCafeteriaRepository>();
-builder.Services.AddScoped<IngredientesCafeteriaService>();
-
 builder.Services.AddScoped<IProductosCafeteriaRepository, ProductosCafeteriaRepository>();
-builder.Services.AddScoped<ProductosCafeteriaService>();
-
 builder.Services.AddScoped<IAlergenosCafeteriaRepository, AlergenosCafeteriaRepository>();
-builder.Services.AddScoped<AlergenosCafeteriaService>();
+builder.Services.AddScoped<IMesasRepository, MesasRepository>();
+builder.Services.AddScoped<IPedidosRepository, PedidosRepository>();
 
-
+// Servicios
+builder.Services.AddScoped<IProductosFloristeriaService, ProductosFloristeriaService>();
+builder.Services.AddScoped<IIngredientesCafeteriaService, IngredientesCafeteriaService>();
+builder.Services.AddScoped<IProductosCafeteriaService, ProductosCafeteriaService>();
+builder.Services.AddScoped<IAlergenosCafeteriaService, AlergenosCafeteriaService>();
+builder.Services.AddScoped<IMesasService, MesasService>();
+builder.Services.AddScoped<IPedidosService, PedidosService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -37,4 +39,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-

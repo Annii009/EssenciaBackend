@@ -8,13 +8,14 @@ namespace Essencia.Backend.Controllers
     [Route("api/[controller]")]
     public class IngredientesCafeteriaController : ControllerBase
     {
-        private readonly IngredientesCafeteriaService _ingredientesCafeteriaService;
+        private readonly IIngredientesCafeteriaService _ingredientesCafeteriaService;
 
-        public IngredientesCafeteriaController(IngredientesCafeteriaService ingredientesCafeteriaService)
+        public IngredientesCafeteriaController(IIngredientesCafeteriaService ingredientesCafeteriaService)
         {
             _ingredientesCafeteriaService = ingredientesCafeteriaService;
         }
-        
+
+        // GET api/ingredientescafeteria
         [HttpGet]
         public async Task<IActionResult> GetAllIngredientesCafeteria()
         {
@@ -22,6 +23,7 @@ namespace Essencia.Backend.Controllers
             return Ok(ingredientes);
         }
 
+        // GET api/ingredientescafeteria/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetIngredienteCafeteriaById(int id)
         {
@@ -33,27 +35,33 @@ namespace Essencia.Backend.Controllers
             return Ok(ingrediente);
         }
 
+        // POST api/ingredientescafeteria
         [HttpPost]
         public async Task<IActionResult> CreateIngredienteCafeteria([FromBody] IngredientesCafeteriaCreateDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var nuevoIngrediente = await _ingredientesCafeteriaService.CreatIngredienteCafeteriaAsync(dto);
-            return CreatedAtAction(nameof(GetIngredienteCafeteriaById),
-                                  new { id = nuevoIngrediente.IngredientesId },
-                                  nuevoIngrediente);
+
+            return CreatedAtAction(
+                nameof(GetIngredienteCafeteriaById),
+                new { id = nuevoIngrediente.IngredientesId },
+                nuevoIngrediente);
         }
 
-        [HttpDelete]
+        // DELETE api/ingredientescafeteria/5
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIngredienteCafeteria(int id)
         {
-
             var ingrediente = await _ingredientesCafeteriaService.GetIngredienteCafeteriaByIdAsync(id);
             if (ingrediente == null)
             {
                 return NotFound();
             }
+
             await _ingredientesCafeteriaService.DeleteAsync(id);
             return NoContent();
-
         }
     }
 }

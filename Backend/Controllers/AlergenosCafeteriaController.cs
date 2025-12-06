@@ -8,9 +8,9 @@ namespace Essencia.Backend.Controllers
     [Route("api/[controller]")]
     public class AlergenosCafeteriaController : ControllerBase
     {
-        private readonly AlergenosCafeteriaService _alergenosCafeteriaService;
+        private readonly IAlergenosCafeteriaService _alergenosCafeteriaService;
 
-        public AlergenosCafeteriaController(AlergenosCafeteriaService alergenosCafeteriaService)
+        public AlergenosCafeteriaController(IAlergenosCafeteriaService alergenosCafeteriaService)
         {
             _alergenosCafeteriaService = alergenosCafeteriaService;
         }
@@ -36,24 +36,28 @@ namespace Essencia.Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAlergenoCafeteria([FromBody] AlergenosCafeteriaCreateDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var nuevoAlergeno = await _alergenosCafeteriaService.CreatalergenoCafeteriaAsync(dto);
-            return CreatedAtAction(nameof(GetAlergenoCafeteriaById),
-                                  new { id = nuevoAlergeno.AlergenosId },
-                                  nuevoAlergeno);
+
+            return CreatedAtAction(
+                nameof(GetAlergenoCafeteriaById),
+                new { id = nuevoAlergeno.AlergenosId },
+                nuevoAlergeno);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAlergenoCafeteria(int id)
         {
-
             var alergeno = await _alergenosCafeteriaService.GetalergenoCafeteriaByIdAsync(id);
             if (alergeno == null)
             {
                 return NotFound();
             }
+
             await _alergenosCafeteriaService.DeleteAsync(id);
             return NoContent();
-
         }
     }
 }

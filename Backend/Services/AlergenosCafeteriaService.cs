@@ -4,7 +4,7 @@ using Models;
 
 namespace Essencia.Backend.Services
 {
-    public class AlergenosCafeteriaService
+    public class AlergenosCafeteriaService : IAlergenosCafeteriaService
     {
         private readonly IAlergenosCafeteriaRepository _alergenosCafeteriaRepository;
 
@@ -63,4 +63,5 @@ namespace Essencia.Backend.Services
             await _alergenosCafeteriaRepository.DeleteAsync(id);
         }
     }
+
 }

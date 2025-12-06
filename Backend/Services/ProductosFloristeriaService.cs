@@ -4,7 +4,7 @@ using Models;
 
 namespace Essencia.Backend.Services
 {
-    public class ProductosFloristeriaService
+    public class ProductosFloristeriaService : IProductosFloristeriaService
     {
         private readonly IProductosFloristeriaRepository _productosFloristeriaRepository;
 
