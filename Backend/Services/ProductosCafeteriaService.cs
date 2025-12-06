@@ -87,7 +87,33 @@ namespace Essencia.Backend.Services
                 throw new ArgumentException("El id no es válido para la eliminación.");
             await _productosCafeteriaRepository.DeleteAsync(id);
         }
+
+
+        public async Task<IEnumerable<ProductosCafeteriaResponseDto>> SearchAsync(ProductosCafeteriaSearchDto filtro)
+        {
+            var ordenarPor = filtro.OrdenPor;
+            var ordenarDesc = string.Equals(filtro.OrdenDireccion, "desc", StringComparison.OrdinalIgnoreCase);
+
+            var productos = await _productosCafeteriaRepository.SearchAsync(
+                filtro.Categoria,
+                filtro.MinPrecio,
+                filtro.MaxPrecio,
+                ordenarPor,
+                ordenarDesc);
+
+            return productos.Select(p => new ProductosCafeteriaResponseDto
+            {
+                ProductosCafeteriaId = p.ProductosCafeteriaId,
+                Nombre = p.Nombre,
+                Categoria = p.Categoria,
+                ImagenRuta = p.ImagenRuta,
+                Descripcion = p.Descripcion,
+                PrecioEuros = p.PrecioEuros
+            }).ToList();
+        }
+
+
     }
 
-    
+
 }

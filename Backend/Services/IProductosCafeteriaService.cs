@@ -10,6 +10,7 @@ namespace Essencia.Backend.Services
         Task<ProductosCafeteria> CreateProductoCafeteriaAsync(ProductosCafeteriaCreateDto dto);
         Task<ProductosCafeteria?> UpdateProductoCafeteriaAsync(int id, ProductosCafeteriaUpdateDto dto);
         Task DeleteAsync(int id);
+        Task<IEnumerable<ProductosCafeteriaResponseDto>> SearchAsync(ProductosCafeteriaSearchDto filtro);
     }
 
 }

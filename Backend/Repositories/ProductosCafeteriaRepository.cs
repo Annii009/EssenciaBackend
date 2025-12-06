@@ -21,7 +21,7 @@ namespace Essencia.Backend.Repositories
             {
                 await connection.OpenAsync();
                 var command = new SqlCommand(
-                    "SELECT ID, Nombre, Categoria, ImagenRuta, Descripcion, PrecioEuros FROM ProductosCafeteria", 
+                    "SELECT ID, Nombre, Categoria, ImagenRuta, Descripcion, PrecioEuros FROM ProductosCafeteria",
                     connection);
 
                 using (var reader = await command.ExecuteReaderAsync())
@@ -42,7 +42,7 @@ namespace Essencia.Backend.Repositories
             {
                 await connection.OpenAsync();
                 var command = new SqlCommand(
-                    "SELECT ID, Nombre, Categoria, ImagenRuta, Descripcion, PrecioEuros FROM ProductosCafeteria WHERE ID = @Id", 
+                    "SELECT ID, Nombre, Categoria, ImagenRuta, Descripcion, PrecioEuros FROM ProductosCafeteria WHERE ID = @Id",
                     connection);
                 command.Parameters.AddWithValue("@Id", id);
 
@@ -65,7 +65,7 @@ namespace Essencia.Backend.Repositories
                 await connection.OpenAsync();
                 var command = new SqlCommand(
                     @"INSERT INTO ProductosCafeteria (ID, Nombre, Categoria, ImagenRuta, Descripcion, PrecioEuros) 
-                      VALUES (@Id, @Nombre, @Categoria, @ImagenRuta, @Descripcion, @PrecioEuros)", 
+                      VALUES (@Id, @Nombre, @Categoria, @ImagenRuta, @Descripcion, @PrecioEuros)",
                     connection);
 
                 command.Parameters.AddWithValue("@Id", producto.ProductosCafeteriaId);
@@ -93,7 +93,7 @@ namespace Essencia.Backend.Repositories
                           ImagenRuta = @ImagenRuta, 
                           Descripcion = @Descripcion, 
                           PrecioEuros = @PrecioEuros
-                      WHERE ID = @Id", 
+                      WHERE ID = @Id",
                     connection);
 
                 command.Parameters.AddWithValue("@Id", producto.ProductosCafeteriaId);
@@ -144,5 +144,61 @@ namespace Essencia.Backend.Repositories
                 reader.GetDecimal(reader.GetOrdinal("PrecioEuros"))
             );
         }
+
+        public async Task<IEnumerable<ProductosCafeteria>> SearchAsync(string? categoria, decimal? minPrecio, decimal? maxPrecio, string? ordenarPor, bool ordenarDesc)
+        {
+            var productos = new List<ProductosCafeteria>();
+
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            var sql = @"SELECT ID, Nombre, Categoria, ImagenRuta, Descripcion, PrecioEuros
+                FROM ProductosCafeteria
+                WHERE 1 = 1";
+
+            var command = new SqlCommand();
+            command.Connection = connection;
+
+            if (!string.IsNullOrWhiteSpace(categoria))
+            {
+                sql += " AND Categoria = @Categoria";
+                command.Parameters.AddWithValue("@Categoria", categoria);
+            }
+
+            if (minPrecio.HasValue)
+            {
+                sql += " AND PrecioEuros >= @MinPrecio";
+                command.Parameters.AddWithValue("@MinPrecio", minPrecio.Value);
+            }
+
+            if (maxPrecio.HasValue)
+            {
+                sql += " AND PrecioEuros <= @MaxPrecio";
+                command.Parameters.AddWithValue("@MaxPrecio", maxPrecio.Value);
+            }
+
+            string columnaOrden = "Nombre";
+            if (!string.IsNullOrWhiteSpace(ordenarPor))
+            {
+                if (ordenarPor.Equals("precio", StringComparison.OrdinalIgnoreCase))
+                    columnaOrden = "PrecioEuros";
+                else if (ordenarPor.Equals("nombre", StringComparison.OrdinalIgnoreCase))
+                    columnaOrden = "Nombre";
+            }
+
+            var direccion = ordenarDesc ? "DESC" : "ASC";
+            sql += $" ORDER BY {columnaOrden} {direccion}";
+
+            command.CommandText = sql;
+
+            using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                productos.Add(MapToProducto(reader));
+            }
+
+            return productos;
+        }
+
     }
 }

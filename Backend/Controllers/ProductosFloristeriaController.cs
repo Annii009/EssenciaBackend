@@ -63,5 +63,14 @@ namespace Essencia.Backend.Controllers
             await _productosFloristeriaService.DeleteAsync(id);
             return NoContent();
         }
+
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromQuery] ProductosFloristeriaSearchDto filtro)
+        {
+            var productos = await _productosFloristeriaService.SearchAsync(filtro);
+            return Ok(productos);
+        }
+
     }
 }

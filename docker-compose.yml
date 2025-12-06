@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: essencia-sql
+    ports:
+      - "8308:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=P@ssw0rd2025!
+    volumes:
+      - essencia-sql-data:/var/opt/mssql
+    networks:
+      - essencia-net
+
+  api:
+    image: annii009/essencia-api:1.0
+    container_name: essencia-api
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__CadenaConexionEssencia=Server=db,1433;Database=EssenciaDB;User Id=sa;Password=P@ssw0rd2025!;TrustServerCertificate=True;
+    ports:
+      - "8038:8080"   # API: host 8038 -> contenedor 8080
+    networks:
+      - essencia-net
+
+  frontend:
+    image: annii009/essencia-front:1.0
+    container_name: essencia-front
+    ports:
+      - "8080:80"
+    networks:
+      - essencia-net
+
+
+networks:
+  essencia-net:
+    driver: bridge
+
+volumes:
+  essencia-sql-data:
+

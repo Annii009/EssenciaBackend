@@ -78,5 +78,13 @@ namespace Essencia.Backend.Controllers
             await _productosCafeteriaService.DeleteAsync(id);
             return NoContent();
         }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromQuery] ProductosCafeteriaSearchDto filtro)
+        {
+            var productos = await _productosCafeteriaService.SearchAsync(filtro);
+            return Ok(productos);
+        }
+
     }
 }

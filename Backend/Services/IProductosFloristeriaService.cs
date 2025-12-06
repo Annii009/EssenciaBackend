@@ -9,5 +9,7 @@ namespace Essencia.Backend.Services
         Task<ProductosFloristeriaResponseDto?> GetProductoFloristeriaByIdAsync(int id);
         Task<ProductosFloristeria> CreatProductoFloristeriaAsync(ProductosFloristeriaCreateDto dto);
         Task DeleteAsync(int id);
+        Task<IEnumerable<ProductosFloristeriaResponseDto>> SearchAsync(ProductosFloristeriaSearchDto filtro);
+
     }
 }

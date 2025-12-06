@@ -10,5 +10,7 @@ namespace Essencia.Backend.Repositories
         Task<ProductosCafeteria> UpdateAsync(ProductosCafeteria producto);
         Task DeleteAsync(int id);
         Task<int> GetMaxIdAsync();
+        Task<IEnumerable<ProductosCafeteria>> SearchAsync(string? categoria, decimal? minPrecio, decimal? maxPrecio, string? ordenarPor, bool ordenarDesc);
+
     }
 }

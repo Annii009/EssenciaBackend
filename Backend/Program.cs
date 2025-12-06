@@ -14,6 +14,8 @@ builder.Services.AddScoped<IProductosCafeteriaRepository, ProductosCafeteriaRepo
 builder.Services.AddScoped<IAlergenosCafeteriaRepository, AlergenosCafeteriaRepository>();
 builder.Services.AddScoped<IMesasRepository, MesasRepository>();
 builder.Services.AddScoped<IPedidosRepository, PedidosRepository>();
+builder.Services.AddScoped<IDetallePedidoRepository, DetallePedidoRepository>();
+
 
 // Servicios
 builder.Services.AddScoped<IProductosFloristeriaService, ProductosFloristeriaService>();
@@ -22,17 +24,15 @@ builder.Services.AddScoped<IProductosCafeteriaService, ProductosCafeteriaService
 builder.Services.AddScoped<IAlergenosCafeteriaService, AlergenosCafeteriaService>();
 builder.Services.AddScoped<IMesasService, MesasService>();
 builder.Services.AddScoped<IPedidosService, PedidosService>();
+builder.Services.AddScoped<IDetallePedidoService, DetallePedidoService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

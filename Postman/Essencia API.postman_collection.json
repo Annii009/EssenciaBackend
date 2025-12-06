@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "1aea7b5e-cd30-48d6-95d4-fde8127edd95",
+		"name": "Essencia API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49401958",
+		"_collection_link": "https://anaheralmudi-8976383.postman.co/workspace/Ana-Hernandez's-Workspace~52058e76-8724-401b-87bf-5ab51c447bc0/collection/49401958-1aea7b5e-cd30-48d6-95d4-fde8127edd95?action=share&source=collection_link&creator=49401958"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8038/api/ProductosCafeteria",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8038",
+					"path": [
+						"api",
+						"ProductosCafeteria"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8038/api/ProductosFloristeria",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8038/api/ProductosFloristeria",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8038",
+					"path": [
+						"api",
+						"ProductosFloristeria"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8038/api/ProductosCafeteria",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Café Latte\",\r\n  \"categoria\": \"Bebida\",\r\n  \"imagenRuta\": \"imagenes/cafe-latte.jpg\",\r\n  \"descripcion\": \"Café con leche espumada\",\r\n  \"precioEuros\": 2.5\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8038/api/ProductosCafeteria",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8038",
+					"path": [
+						"api",
+						"ProductosCafeteria"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8038"
+		}
+	]
+}

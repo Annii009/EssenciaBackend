@@ -8,5 +8,7 @@ namespace Essencia.Backend.Repositories
         Task<ProductosFloristeria> AddAsync(ProductosFloristeria producto);
         Task DeleteAsync(int id);
         Task<int> GetMaxIdAsync();
+        Task<IEnumerable<ProductosFloristeria>> SearchAsync(string? texto, decimal? minPrecio, decimal? maxPrecio, string? ordenarPor, bool ordenarDesc);
+
     }
 }

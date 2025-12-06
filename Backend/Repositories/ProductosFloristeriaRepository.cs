@@ -61,7 +61,7 @@ namespace Essencia.Backend.Repositories
                 await connection.OpenAsync();
                 var command = new SqlCommand(
                     @"INSERT INTO ProductosFloristeria (ID, Nombre, ImagenRuta, Detalle, DescripcionCuidados, PrecioEuros) 
-                      VALUES (@Id, @Nombre, @ImagenRuta, @Detalle, @DescripcionCuidados, @PrecioEuros)", 
+                      VALUES (@Id, @Nombre, @ImagenRuta, @Detalle, @DescripcionCuidados, @PrecioEuros)",
                     connection);
 
                 command.Parameters.AddWithValue("@Id", producto.ProductosFloristeriaId);
@@ -112,5 +112,64 @@ namespace Essencia.Backend.Repositories
                 reader.GetDecimal(reader.GetOrdinal("PrecioEuros"))
             );
         }
+
+        public async Task<IEnumerable<ProductosFloristeria>> SearchAsync(string? texto, decimal? minPrecio, decimal? maxPrecio, string? ordenarPor, bool ordenarDesc)
+        {
+            var productos = new List<ProductosFloristeria>();
+
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            var sql = @"SELECT ID, Nombre, ImagenRuta, Detalle, DescripcionCuidados, PrecioEuros
+                FROM ProductosFloristeria
+                WHERE 1 = 1";
+
+            var command = new SqlCommand();
+            command.Connection = connection;
+
+            if (!string.IsNullOrWhiteSpace(texto))
+            {
+                sql += " AND Nombre LIKE @Texto";
+                command.Parameters.AddWithValue("@Texto", "%" + texto + "%");
+            }
+
+            if (minPrecio.HasValue)
+            {
+                sql += " AND PrecioEuros >= @MinPrecio";
+                command.Parameters.AddWithValue("@MinPrecio", minPrecio.Value);
+            }
+
+            if (maxPrecio.HasValue)
+            {
+                sql += " AND PrecioEuros <= @MaxPrecio";
+                command.Parameters.AddWithValue("@MaxPrecio", maxPrecio.Value);
+            }
+
+            string columnaOrden = "Nombre";
+            if (!string.IsNullOrWhiteSpace(ordenarPor))
+            {
+                if (ordenarPor.Equals("precio", StringComparison.OrdinalIgnoreCase))
+                    columnaOrden = "PrecioEuros";
+                else if (ordenarPor.Equals("nombre", StringComparison.OrdinalIgnoreCase))
+                    columnaOrden = "Nombre";
+            }
+
+            var direccion = ordenarDesc ? "DESC" : "ASC";
+            sql += $" ORDER BY {columnaOrden} {direccion}";
+
+            command.CommandText = sql;
+
+            using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                productos.Add(MapToProducto(reader));
+            }
+
+            return productos;
+        }
+
+
+
+
     }
 }
